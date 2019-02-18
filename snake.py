@@ -1,5 +1,5 @@
 import pygame, sys, random
-
+import pygame.freetype
 from pygame.locals import *
 #the color of the eggs
 redColor = pygame.Color(255, 0, 0)
@@ -30,7 +30,23 @@ def cut(lst):
           if lst[i] == lst[0]:
                del lst[i:len(lst)]
                     
-
+def pause(window):
+     paused = True
+     
+     while paused:
+          fonts = pygame.font.SysFont('arial.ttf', 50)
+          words = fonts.render("Press q to quit or e to continue", True, (255,255,0))
+          window.blit(words, (150,20))
+          for event in pygame.event.get():
+               if event.type == QUIT:
+                   gameover()
+               if event.type == KEYDOWN:
+                    if event.key == K_q:
+                         gameover()
+                    elif event.key == K_e:
+                         paused = False
+     
+               
      
 
 
@@ -55,8 +71,7 @@ def main():
      while True:
           for event in pygame.event.get():
                if event.type == QUIT:
-                   pygame.quit()
-                   sys.exit()
+                   gameover()
                    # changes the direction string in to the direction according to the key pressed
                    # cannot change the direction into the opposite direction as the current one
                    # for example, if the current direction string is left, pressing d won't change the direction
@@ -69,6 +84,8 @@ def main():
                          direction = 'left'
                     if event.key == K_s and direction != 'up':
                          direction = 'down'
+                    if event.key == K_p:
+                         pause(window)
 
           # moves the position of the snake according to the direction string
           if direction == 'right':
