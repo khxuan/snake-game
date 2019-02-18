@@ -55,6 +55,7 @@ def main():
      pygame.init()
     #delares a variable to control the speed of the game
      fpsClock = pygame.time.Clock()
+     level = 5
     #creates the window
      window = pygame.display.set_mode((640, 480))
      pygame.display.set_caption('snake')
@@ -110,7 +111,8 @@ def main():
                foodflag = 0
           else:
                snakeBody.pop()
-          if foodflag == 0: 
+          if foodflag == 0:
+               level +=3
                foodPosition = respawn(snakeBody)
                foodflag = 1
           window.fill(blackColor)
@@ -125,7 +127,7 @@ def main():
           elif snakePosition[1] > 460 or snakePosition[1] < 0:
                gameover()
           # pace of the game
-          fpsClock.tick(10)
+          fpsClock.tick(level)
 
 if __name__ == '__main__':
      main()
