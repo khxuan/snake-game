@@ -112,7 +112,7 @@ def main():
           else:
                snakeBody.pop()
           if foodflag == 0:
-               level +=3
+               #level +=1
                foodPosition = respawn(snakeBody)
                foodflag = 1
           window.fill(blackColor)
@@ -127,7 +127,7 @@ def main():
           elif snakePosition[1] > 460 or snakePosition[1] < 0:
                gameover()
           # pace of the game
-          fpsClock.tick(level)
+          fpsClock.tick(level + (len(snakeBody)*0.6))
 
 if __name__ == '__main__':
      main()
