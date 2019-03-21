@@ -97,7 +97,9 @@ def main():
             for event in pygame.event.get():
                 if event.type == QUIT:
                     gameover()
-
+                    '''
+                    directions for the snake - refer to README file
+                    '''
                 elif event.type == KEYDOWN:
                     if event.key == K_d and direction != 'left':
                         direction = 'right'
