@@ -94,87 +94,85 @@ def main():
     direction = 'right'
     
     while True:
-            for event in pygame.event.get():
-                if event.type == QUIT:
-                    gameover()
-                    '''
-                    directions for the snake - refer to README file
-                    '''
-                elif event.type == KEYDOWN:
-                    if event.key == K_d and direction != 'left':
-                        direction = 'right'
-                    elif event.key == K_w and direction != 'down':
-                        direction = 'up'
-                    elif event.key == K_a and direction != 'right':
-                        direction = 'left'
-                    elif event.key == K_s and direction != 'up':
-                        direction = 'down'
-                    elif event.key == K_p:
-                        pause(window)
-                    elif event.key == K_f:
-                    	if not is_backward:
-    	                	pygame.mixer.music.load('sound\\bites_the_dust2.mp3')
-    	                	pygame.mixer.music.play(0,0.0)
-                    	is_backward = not is_backward;
-            if is_backward:
-            	if len(past_snake) > 0:
-    	        	snake_Body = past_snake[-1][0]
-    	        	if not past_snake[-1][1] == food_Position:
-    	        		fu_food.append(copy.deepcopy(food_Position))
-    	        		level -= 0.6
-    	        	food_Position = past_snake[-1][1]
-    	        	snake_Position = past_snake[-1][2]
-    	        	direction = past_snake[-1][3]
-    	        	past_snake.pop()
-            else:
-            	past_snake.append([snake_Body[:], food_Position[:], snake_Position[:], direction])
-    	        if direction == 'right':
-    	            snake_Position[0] += 20
-    	        elif direction == 'left':
-    	            snake_Position[0] -= 20
-    	        elif direction == 'up':
-    	            snake_Position[1] -= 20
-    	        elif direction == 'down':
-    	            snake_Position[1] += 20
-
-    	        eats_own_tail(snake_Body)
-
-
-
-    	        snake_Body.insert(0, list(snake_Position))
-
-    	        if snake_Position[0] == food_Position[0] and snake_Position[1] == food_Position[1]:
-    	            is_food_eaten = 0
-
-    	            level +=0.6
-    	        else:
-    	            snake_Body.pop()
-    	        if is_food_eaten == 0:
-    	        	if len(fu_food) > 0 and not [int(fu_food[-1][0] * 20), int(fu_food[-1][1] * 20)] in snake_Body:
-    	        		food_Position = fu_food.pop()
-    	        	else:
-    	        		food_Position = respawn(snake_Body)
-    	        	is_food_eaten = 1
-
-
-
-            window.blit(is_background, (0,0))
-
-            for position in snake_Body:
-            	window.blit(snake, (position[0], position[1]))
-            window.blit(snake_head, (snake_Body[0][0], snake_Body[0][1]))
-            window.blit(food, (food_Position[0], food_Position[1]))
-            pygame.display.flip()
-
-            if snake_Position[0] > 620 or snake_Position[0] < 0:
+        for event in pygame.event.get():
+            if event.type == QUIT:
                 gameover()
-            elif snake_Position[1] > 460 or snake_Position[1] < 0:
-                gameover()
+               
+            elif event.type == KEYDOWN:
+                if event.key == K_d and direction != 'left':
+                    direction = 'right'
+                elif event.key == K_w and direction != 'down':
+                    direction = 'up'
+                elif event.key == K_a and direction != 'right':
+                    direction = 'left'
+                elif event.key == K_s and direction != 'up':
+                    direction = 'down'
+                elif event.key == K_p:
+                    pause(window)
+                elif event.key == K_f:
+                	if not is_backward:
+	                	pygame.mixer.music.load('sound\\bites_the_dust2.mp3')
+	                	pygame.mixer.music.play(0,0.0)
+                	is_backward = not is_backward;
+        if is_backward:
+        	if len(past_snake) > 0:
+	        	snake_Body = past_snake[-1][0]
+	        	if not past_snake[-1][1] == food_Position:
+	        		fu_food.append(copy.deepcopy(food_Position))
+	        		level -= 0.6
+	        	food_Position = past_snake[-1][1]
+	        	snake_Position = past_snake[-1][2]
+	        	direction = past_snake[-1][3]
+	        	past_snake.pop()
+        else:
+        	past_snake.append([snake_Body[:], food_Position[:], snake_Position[:], direction])
+	        if direction == 'right':
+	            snake_Position[0] += 20
+	        elif direction == 'left':
+	            snake_Position[0] -= 20    
+	        elif direction == 'up':
+	            snake_Position[1] -= 20
+	        elif direction == 'down':
+	            snake_Position[1] += 20
 
-            if is_backward:
-            	fps_Clock.tick(level *10)
-            else:
-            	fps_Clock.tick(level)
+	        eats_own_tail(snake_Body)
+	          
 
-    if __name__ == '__main__':
-        main()
+
+	        snake_Body.insert(0, list(snake_Position))
+
+	        if snake_Position[0] == food_Position[0] and snake_Position[1] == food_Position[1]:
+	            is_food_eaten = 0
+
+	            level +=0.6
+	        else:
+	            snake_Body.pop()
+	        if is_food_eaten == 0:
+	        	if len(fu_food) > 0 and not [int(fu_food[-1][0] * 20), int(fu_food[-1][1] * 20)] in snake_Body:
+	        		food_Position = fu_food.pop()
+	        	else:
+	        		food_Position = respawn(snake_Body)
+	        	is_food_eaten = 1
+
+
+
+        window.blit(is_background, (0,0))
+
+        for position in snake_Body:
+        	window.blit(snake, (position[0], position[1]))
+        window.blit(snake_head, (snake_Body[0][0], snake_Body[0][1]))
+        window.blit(food, (food_Position[0], food_Position[1]))
+        pygame.display.flip()
+
+        if snake_Position[0] > 620 or snake_Position[0] < 0:
+            gameover()
+        elif snake_Position[1] > 460 or snake_Position[1] < 0:
+            gameover()
+
+        if is_backward:
+        	fps_Clock.tick(level *10)
+        else:
+        	fps_Clock.tick(level)
+
+if __name__ == '__main__':
+    main()
